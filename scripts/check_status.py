@@ -6,24 +6,62 @@ SOURCES = {
     "GCP": "https://status.cloud.google.com/incidents.json",
 }
 
+LINKS = {
+    "AWS": "https://status.aws.amazon.com/",
+    "GitHub": "https://www.githubstatus.com/",
+    "GCP": "https://status.cloud.google.com/",
+}
+
 def fetch_github():
     r = requests.get(SOURCES["GitHub"])
     data = r.json()
-    return {"name": "GitHub", "status": data["status"]["description"]}
+    return {
+        "name": "GitHub",
+        "status": data["status"]["description"],
+        "indicator": data["status"]["indicator"],
+        "link": LINKS["GitHub"]
+    }
 
 def fetch_gcp():
     r = requests.get(SOURCES["GCP"])
     incidents = r.json()
-    latest = incidents[0] if incidents else {}
+    
+    if not incidents:
+        return {
+            "name": "GCP",
+            "status": "No incidents",
+            "has_incident": False,
+            "link": LINKS["GCP"]
+        }
+    
+    latest = incidents[0]
+    most_recent = latest.get("most_recent_update", {})
+    
     return {
         "name": "GCP",
-        "status": latest.get("most_recent_update", "No incidents"),
-        "service": latest.get("service_name", "none"),
+        "status": latest.get("external_desc", "Incident detected"),
+        "has_incident": True,
+        "incident_number": latest.get("number", "Unknown"),
+        "service_name": latest.get("service_name", "Unknown service"),
+        "severity": latest.get("severity", "Unknown"),
+        "created": latest.get("created", ""),
+        "modified": most_recent.get("modified", ""),
+        "status_impact": most_recent.get("status", "AVAILABLE"),
+        "link": f"https://status.cloud.google.com/incidents/{latest.get('uri', '')}" if latest.get('uri') else LINKS["GCP"]
     }
 
 def fetch_aws():
     r = requests.get(SOURCES["AWS"])
-    return {"name": "AWS", "status": "Fetched RSS feed", "preview": r.text[:200]}
+    # 簡易的なRSSパース（本格的にはfeedparserを使用）
+    content = r.text
+    has_incident = "<item>" in content
+    
+    return {
+        "name": "AWS",
+        "status": "Service operational" if not has_incident else "Check status page",
+        "has_incident": has_incident,
+        "link": LINKS["AWS"]
+    }
 
 def main():
     results = [fetch_aws(), fetch_github(), fetch_gcp()]
