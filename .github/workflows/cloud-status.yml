@@ -27,7 +27,4 @@ jobs:
           git push
       - name: Send Slack notification
         if: always()
-        run: |
-          curl -X POST -H 'Content-type: application/json' \
-          --data "{\"text\":\"☁️ Cloud Status Monitor: Check completed with status ${{ job.status }}\"}" \
-          ${{ secrets.SLACK_WEBHOOK_URL_MONITORING_CLOUDS }}
+        run: python scripts/notify_slack.py "${{ secrets.SLACK_WEBHOOK_URL_MONITORING_CLOUDS }}" "data/cloud_status.json"
