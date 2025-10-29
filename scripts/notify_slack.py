@@ -11,19 +11,37 @@ def format_status_line(service):
     if name == 'AWS':
         has_incident = service.get('has_incident', False)
         status = service.get('status', 'Unknown')
-        emoji = "⚠️" if has_incident else "✅"
-        return f"{emoji} *<{link}|{name}>*: {status}"
+        emoji = "🔴" if has_incident else "🟢"
+        return {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"{emoji} *<{link}|Amazon Web Services>*\n{status}"
+            }
+        }
     
     elif name == 'GitHub':
         status = service.get('status', 'Unknown')
         indicator = service.get('indicator', 'none')
-        emoji = "✅" if indicator == 'none' else "⚠️"
-        return f"{emoji} *<{link}|{name}>*: {status}"
+        emoji = "🟢" if indicator == 'none' else "🔴"
+        return {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"{emoji} *<{link}|GitHub>*\n{status}"
+            }
+        }
     
     elif name == 'GCP':
         has_incident = service.get('has_incident', False)
         if not has_incident:
-            return f"✅ *<{link}|{name}>*: No incidents"
+            return {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": f"🟢 *<{link}|Google Cloud Platform>*\nNo incidents"
+                }
+            }
         
         # インシデントがある場合
         status = service.get('status', 'Incident detected')
@@ -42,21 +60,28 @@ def format_status_line(service):
         else:
             date_str = 'Unknown'
         
-        return f"⚠️ *<{link}|{name}>*: {status}\n   _Service:_ {service_name}\n   _Severity:_ {severity}\n   _Incident #:_ {incident_number}\n   _Created:_ {date_str}"
+        incident_link = service.get('link', '#')
+        
+        return {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"🔴 *<{link}|Google Cloud Platform>*\n*Service impact:* {status}\n_{service_name}_ | Severity: {severity} | Incident #{incident_number}\nCreated: {date_str}\n<{incident_link}|View details>"
+            }
+        }
     
-    return f"❓ *{name}*: Unknown"
+    return {
+        "type": "section",
+        "text": {
+            "type": "mrkdwn",
+            "text": f"❓ *{name}*\nUnknown"
+        }
+    }
 
 def send_slack_notification(webhook_url, status_file):
     # ステータスファイルを読み込む
     with open(status_file, 'r') as f:
         data = json.load(f)
-    
-    # 各サービスのステータスを整形
-    status_lines = []
-    for service in data['statuses']:
-        status_lines.append(format_status_line(service))
-    
-    status_text = "\n\n".join(status_lines)
     
     # タイムスタンプを整形
     timestamp = data.get('timestamp', '')
@@ -69,8 +94,39 @@ def send_slack_notification(webhook_url, status_file):
     else:
         time_str = 'Unknown'
     
+    # ブロックを作成
+    blocks = [
+        {
+            "type": "header",
+            "text": {
+                "type": "plain_text",
+                "text": "☁️ Cloud Status Monitor",
+                "emoji": True
+            }
+        },
+        {
+            "type": "divider"
+        }
+    ]
+    
+    # 各サービスのステータスブロックを追加
+    for service in data['statuses']:
+        blocks.append(format_status_line(service))
+        blocks.append({"type": "divider"})
+    
+    # フッター
+    blocks.append({
+        "type": "context",
+        "elements": [
+            {
+                "type": "mrkdwn",
+                "text": f"Checked at: {time_str}"
+            }
+        ]
+    })
+    
     payload = {
-        "text": f"☁️ *Cloud Status Monitor Report*\n\n{status_text}\n\n_Checked at: {time_str}_"
+        "blocks": blocks
     }
     
     response = requests.post(webhook_url, json=payload)
