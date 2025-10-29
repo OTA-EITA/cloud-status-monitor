@@ -27,39 +27,7 @@ jobs:
           git push
       - name: Send Slack notification
         if: always()
-        uses: slackapi/slack-github-action@v1.26.0
-        with:
-          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL_MONITORING_CLOUDS }}
-          payload: |
-            {
-              "text": "Cloud Status Check Completed",
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "☁️ Cloud Status Monitor Report"
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Status:*\n${{ job.status }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Repository:*\n${{ github.repository }}"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "View details: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Workflow Run>"
-                  }
-                }
-              ]
-            }
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{\"text\":\"☁️ Cloud Status Monitor: Check completed with status ${{ job.status }}\"}" \
+          ${{ secrets.SLACK_WEBHOOK_URL_MONITORING_CLOUDS }}
