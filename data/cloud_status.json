@@ -1,11 +1,17 @@
 {
-  "timestamp": "2025-10-29T14:26:34.756486",
+  "timestamp": "2025-10-29T14:29:32.827099",
   "statuses": [
     {
       "name": "AWS",
       "status": "Check status page",
       "has_incident": true,
-      "link": "https://status.aws.amazon.com/"
+      "link": "https://health.aws.amazon.com/health/status"
+    },
+    {
+      "name": "Azure",
+      "status": "Service operational",
+      "has_incident": false,
+      "link": "https://azure.status.microsoft/en-us/status"
     },
     {
       "name": "GitHub",
@@ -23,7 +29,7 @@
       "created": "2025-07-18T15:54:23+00:00",
       "modified": "2025-07-23T09:26:58+00:00",
       "status_impact": "AVAILABLE",
-      "link": "https://status.cloud.google.com/incidents/incidents/8cY8jdUpEGGbsSMSQk7J"
+      "link": "https://status.cloud.google.com/incidents/8cY8jdUpEGGbsSMSQk7J"
     }
   ]
 }
