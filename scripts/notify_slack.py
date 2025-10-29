@@ -20,6 +20,18 @@ def format_status_line(service):
             }
         }
     
+    elif name == 'Azure':
+        has_incident = service.get('has_incident', False)
+        status = service.get('status', 'Unknown')
+        emoji = "🔴" if has_incident else "🟢"
+        return {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"{emoji} *<{link}|Microsoft Azure>*\n{status}"
+            }
+        }
+    
     elif name == 'GitHub':
         status = service.get('status', 'Unknown')
         indicator = service.get('indicator', 'none')
@@ -66,7 +78,7 @@ def format_status_line(service):
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": f"🔴 *<{link}|Google Cloud Platform>*\n*Service impact:* {status}\n_{service_name}_ | Severity: {severity} | Incident #{incident_number}\nCreated: {date_str}\n<{incident_link}|View details>"
+                "text": f"🔴 *<{incident_link}|Google Cloud Platform>*\n*Service impact:* {status}\n_{service_name}_ | Severity: {severity} | Incident #{incident_number}\nCreated: {date_str}"
             }
         }
     
