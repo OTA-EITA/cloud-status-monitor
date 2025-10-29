@@ -1,0 +1,17 @@
+name: Cloud Status Daily Report
+on:
+  workflow_run:
+    workflows: ["Cloud Service Status Monitor"]
+    types: [completed]
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create Issue from status file
+        uses: peter-evans/create-issue-from-file@v4
+        with:
+          title: "Cloud Status Report $(date +'%Y-%m-%d')"
+          content-filepath: data/cloud_status.json
+          labels: cloud,status
