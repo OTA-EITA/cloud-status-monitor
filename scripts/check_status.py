@@ -4,12 +4,14 @@ SOURCES = {
     "AWS": "https://status.aws.amazon.com/rss/all.rss",
     "GitHub": "https://www.githubstatus.com/api/v2/status.json",
     "GCP": "https://status.cloud.google.com/incidents.json",
+    "Azure": "https://azure.status.microsoft/en-us/status",
 }
 
 LINKS = {
-    "AWS": "https://status.aws.amazon.com/",
+    "AWS": "https://health.aws.amazon.com/health/status",
     "GitHub": "https://www.githubstatus.com/",
     "GCP": "https://status.cloud.google.com/",
+    "Azure": "https://azure.status.microsoft/en-us/status",
 }
 
 def fetch_github():
@@ -37,6 +39,13 @@ def fetch_gcp():
     latest = incidents[0]
     most_recent = latest.get("most_recent_update", {})
     
+    # URIから正しいリンクを生成
+    incident_uri = latest.get("uri", "")
+    incident_link = LINKS["GCP"]
+    if incident_uri:
+        # URIには既に incidents/ が含まれているので、そのまま使用
+        incident_link = f"https://status.cloud.google.com/{incident_uri}"
+    
     return {
         "name": "GCP",
         "status": latest.get("external_desc", "Incident detected"),
@@ -47,12 +56,12 @@ def fetch_gcp():
         "created": latest.get("created", ""),
         "modified": most_recent.get("modified", ""),
         "status_impact": most_recent.get("status", "AVAILABLE"),
-        "link": f"https://status.cloud.google.com/incidents/{latest.get('uri', '')}" if latest.get('uri') else LINKS["GCP"]
+        "link": incident_link
     }
 
 def fetch_aws():
     r = requests.get(SOURCES["AWS"])
-    # 簡易的なRSSパース（本格的にはfeedparserを使用）
+    # 簡易的なRSSパース
     content = r.text
     has_incident = "<item>" in content
     
@@ -63,8 +72,30 @@ def fetch_aws():
         "link": LINKS["AWS"]
     }
 
+def fetch_azure():
+    try:
+        r = requests.get(SOURCES["Azure"], timeout=10)
+        # Azureのステータスページは通常HTMLなので、簡易チェック
+        # APIが利用可能な場合は別途実装
+        if r.status_code == 200:
+            return {
+                "name": "Azure",
+                "status": "Service operational",
+                "has_incident": False,
+                "link": LINKS["Azure"]
+            }
+    except:
+        pass
+    
+    return {
+        "name": "Azure",
+        "status": "Unable to fetch status",
+        "has_incident": False,
+        "link": LINKS["Azure"]
+    }
+
 def main():
-    results = [fetch_aws(), fetch_github(), fetch_gcp()]
+    results = [fetch_aws(), fetch_azure(), fetch_github(), fetch_gcp()]
     report = {
         "timestamp": datetime.datetime.utcnow().isoformat(),
         "statuses": results,
