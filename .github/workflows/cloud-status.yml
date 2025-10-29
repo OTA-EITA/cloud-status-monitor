@@ -25,3 +25,41 @@ jobs:
           git add data/cloud_status.json
           git commit -m "auto: update cloud status $(date -u)" || echo "No changes"
           git push
+      - name: Send Slack notification
+        if: always()
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL_MONITORING_CLOUDS }}
+          payload: |
+            {
+              "text": "Cloud Status Check Completed",
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "☁️ Cloud Status Monitor Report"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Status:*\n${{ job.status }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Repository:*\n${{ github.repository }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "View details: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Workflow Run>"
+                  }
+                }
+              ]
+            }
