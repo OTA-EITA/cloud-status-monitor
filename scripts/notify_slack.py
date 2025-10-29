@@ -3,31 +3,48 @@ import sys
 import json
 from datetime import datetime
 
-def format_gcp_status(service):
-    """GCPのステータスを読みやすく整形"""
-    status = service.get('status', 'Unknown')
+def format_status_line(service):
+    """各サービスのステータスを整形"""
+    name = service['name']
+    link = service.get('link', '#')
     
-    # most_recent_updateがある場合はそれを使用
-    if 'most_recent_update' in service:
-        update = service['most_recent_update']
-        if isinstance(update, dict):
-            # 日付情報を抽出
-            modified = update.get('modified', '')
-            if modified:
-                try:
-                    dt = datetime.fromisoformat(modified.replace('+00:00', ''))
-                    date_str = dt.strftime('%Y-%m-%d')
-                    return f"Incident reported on {date_str}"
-                except:
-                    pass
-            return "Recent incident detected"
+    if name == 'AWS':
+        has_incident = service.get('has_incident', False)
+        status = service.get('status', 'Unknown')
+        emoji = "⚠️" if has_incident else "✅"
+        return f"{emoji} *<{link}|{name}>*: {status}"
     
-    return "No incidents" if status == "No incidents" else status
-
-def format_aws_status(service):
-    """AWSのステータスを読みやすく整形"""
-    # previewから簡単な情報を抽出（実際のRSSパース実装も可能）
-    return "Service operational"
+    elif name == 'GitHub':
+        status = service.get('status', 'Unknown')
+        indicator = service.get('indicator', 'none')
+        emoji = "✅" if indicator == 'none' else "⚠️"
+        return f"{emoji} *<{link}|{name}>*: {status}"
+    
+    elif name == 'GCP':
+        has_incident = service.get('has_incident', False)
+        if not has_incident:
+            return f"✅ *<{link}|{name}>*: No incidents"
+        
+        # インシデントがある場合
+        status = service.get('status', 'Incident detected')
+        service_name = service.get('service_name', 'Unknown service')
+        severity = service.get('severity', 'Unknown')
+        incident_number = service.get('incident_number', 'Unknown')
+        
+        # 日付を整形
+        created = service.get('created', '')
+        if created:
+            try:
+                dt = datetime.fromisoformat(created.replace('+00:00', ''))
+                date_str = dt.strftime('%Y-%m-%d %H:%M UTC')
+            except:
+                date_str = created
+        else:
+            date_str = 'Unknown'
+        
+        return f"⚠️ *<{link}|{name}>*: {status}\n   _Service:_ {service_name}\n   _Severity:_ {severity}\n   _Incident #:_ {incident_number}\n   _Created:_ {date_str}"
+    
+    return f"❓ *{name}*: Unknown"
 
 def send_slack_notification(webhook_url, status_file):
     # ステータスファイルを読み込む
@@ -37,22 +54,9 @@ def send_slack_notification(webhook_url, status_file):
     # 各サービスのステータスを整形
     status_lines = []
     for service in data['statuses']:
-        name = service['name']
-        
-        if name == 'AWS':
-            status = format_aws_status(service)
-        elif name == 'GCP':
-            status = format_gcp_status(service)
-        elif name == 'GitHub':
-            status = service.get('status', 'Unknown')
-        else:
-            status = service.get('status', 'Unknown')
-        
-        # 絵文字を追加
-        emoji = "✅" if status in ["All Systems Operational", "Service operational", "No incidents"] else "⚠️"
-        status_lines.append(f"{emoji} *{name}*: {status}")
+        status_lines.append(format_status_line(service))
     
-    status_text = "\n".join(status_lines)
+    status_text = "\n\n".join(status_lines)
     
     # タイムスタンプを整形
     timestamp = data.get('timestamp', '')
