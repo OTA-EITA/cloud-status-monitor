@@ -23,10 +23,13 @@ jobs:
       - name: Check cloud status
         run: python scripts/check_status.py
 
-      - name: Authenticate GitHub CLI
-        env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        run: gh auth setup-git
+      - name: Set git user from last commit
+        run: |
+          last_author=$(git --no-pager log --format=format:'%an' -n 1)
+          last_email=$(git --no-pager log --format=format:'%ae' -n 1)
+          git config user.name "$last_author"
+          git config user.email "$last_email"
+          echo "Using commit author: $last_author <$last_email>"
 
       - name: Commit and push results
         run: |
