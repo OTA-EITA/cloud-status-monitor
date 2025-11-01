@@ -1,4 +1,5 @@
 name: Cloud Status Daily Report
+
 on:
   workflow_run:
     workflows: ["Cloud Service Status Monitor"]
@@ -13,6 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Authenticate GitHub CLI
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: gh auth setup-git
+
       - name: Create Issue from status file
         uses: peter-evans/create-issue-from-file@v4
         with:
