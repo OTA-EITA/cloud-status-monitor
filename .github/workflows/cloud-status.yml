@@ -1,7 +1,8 @@
 name: Cloud Service Status Monitor
+
 on:
   schedule:
-    - cron: '0 0 * * *'  # 毎日 09:00 JST
+    - cron: '0 0,12 * * *'  # UTC基準 → JSTで 09:00 / 21:00 に実行
   workflow_dispatch:
 
 permissions:
@@ -12,19 +13,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
       - run: pip install requests
+
       - name: Check cloud status
         run: python scripts/check_status.py
+
+      - name: Authenticate GitHub CLI
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: gh auth setup-git
+
       - name: Commit and push results
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/cloud_status.json
-          git commit -m "auto: update cloud status $(date -u)" || echo "No changes"
+          git commit -m "auto: update cloud status $(date -u)" || echo "No changes to commit"
           git push
+
       - name: Send Slack notification
         if: always()
         run: python scripts/notify_slack.py "${{ secrets.SLACK_WEBHOOK_URL_MONITORING_CLOUDS }}" "data/cloud_status.json"
