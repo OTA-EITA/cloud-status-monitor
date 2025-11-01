@@ -23,9 +23,13 @@ jobs:
           git config user.email "$last_email"
           echo "Using commit author: $last_author <$last_email>"
 
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
       - name: Create Issue from status file
         uses: peter-evans/create-issue-from-file@v4
         with:
-          title: "Cloud Status Report $(date +'%Y-%m-%d')"
+          title: "Cloud Status Report ${{ steps.date.outputs.date }}"
           content-filepath: data/cloud_status.json
           labels: cloud,status
