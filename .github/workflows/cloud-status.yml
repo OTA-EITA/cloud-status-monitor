@@ -23,13 +23,11 @@ jobs:
       - name: Check cloud status
         run: python scripts/check_status.py
 
-      - name: Set git user from last commit
+      - name: Set git user from secrets
         run: |
-          last_author=$(git --no-pager log --format=format:'%an' -n 1)
-          last_email=$(git --no-pager log --format=format:'%ae' -n 1)
-          git config user.name "$last_author"
-          git config user.email "$last_email"
-          echo "Using commit author: $last_author <$last_email>"
+          git config --local user.name "${{ secrets.GIT_USER_NAME }}"
+          git config --local user.email "${{ secrets.GIT_USER_EMAIL }}"
+          echo "Using user: ${{ secrets.GIT_USER_NAME }} <${{ secrets.GIT_USER_EMAIL }}>"
 
       - name: Commit and push results
         run: |
