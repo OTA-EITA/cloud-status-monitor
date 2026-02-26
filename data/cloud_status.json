@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-02-25T13:05:04.925369",
+  "timestamp": "2026-02-26T02:04:46.454675",
   "statuses": [
     {
       "name": "AWS",
-      "status": "Service operational",
-      "has_incident": false,
+      "status": "Check status page",
+      "has_incident": true,
       "link": "https://health.aws.amazon.com/health/status"
     },
     {
