@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-27T12:59:25.697948",
+  "timestamp": "2026-02-28T01:53:51.216651",
   "statuses": [
     {
       "name": "AWS",
@@ -21,15 +21,15 @@
     },
     {
       "name": "GCP",
-      "status": "We are investigating elevated error rates with multiple products in us-east1",
+      "status": "Vertex AI Gemini API customers experienced increased error rates when accessing the global endpoint.",
       "has_incident": true,
-      "incident_number": "15787347096705530732",
+      "incident_number": "6876619551109882402",
       "service_name": "Multiple Products",
-      "severity": "medium",
-      "created": "2025-07-18T15:54:23+00:00",
-      "modified": "2025-07-23T09:26:58+00:00",
+      "severity": "low",
+      "created": "2026-02-27T16:12:30+00:00",
+      "modified": "2026-02-27T16:42:13+00:00",
       "status_impact": "AVAILABLE",
-      "link": "https://status.cloud.google.com/incidents/8cY8jdUpEGGbsSMSQk7J"
+      "link": "https://status.cloud.google.com/incidents/41E5S3mkTGDfkZuJZH5k"
     }
   ]
 }
