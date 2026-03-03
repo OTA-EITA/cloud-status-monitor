@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-03T02:08:33.589189",
+  "timestamp": "2026-03-03T12:57:49.577690",
   "statuses": [
     {
       "name": "AWS",
@@ -15,8 +15,8 @@
     },
     {
       "name": "GitHub",
-      "status": "Minor Service Outage",
-      "indicator": "minor",
+      "status": "All Systems Operational",
+      "indicator": "none",
       "link": "https://www.githubstatus.com/"
     },
     {
