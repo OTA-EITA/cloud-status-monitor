@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-10T15:34:14.480065",
+  "timestamp": "2026-06-11T03:58:19.580313",
   "statuses": [
     {
       "name": "AWS",
@@ -15,8 +15,8 @@
     },
     {
       "name": "GitHub",
-      "status": "Partial System Outage",
-      "indicator": "major",
+      "status": "All Systems Operational",
+      "indicator": "none",
       "link": "https://www.githubstatus.com/"
     },
     {
@@ -27,7 +27,7 @@
       "service_name": "Multiple Products",
       "severity": "medium",
       "created": "2026-06-10T01:13:50+00:00",
-      "modified": "2026-06-10T01:13:51+00:00",
+      "modified": "2026-06-10T22:25:38+00:00",
       "status_impact": "SERVICE_DISRUPTION",
       "link": "https://status.cloud.google.com/incidents/5fGQt4VbkDnr3Yp8PXPr"
     }
