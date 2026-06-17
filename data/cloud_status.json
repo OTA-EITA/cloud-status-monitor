@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-16T16:51:17.859101",
+  "timestamp": "2026-06-17T04:07:21.093349",
   "statuses": [
     {
       "name": "AWS",
@@ -15,8 +15,8 @@
     },
     {
       "name": "GitHub",
-      "status": "All Systems Operational",
-      "indicator": "none",
+      "status": "Partial System Outage",
+      "indicator": "major",
       "link": "https://www.githubstatus.com/"
     },
     {
