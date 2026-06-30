@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-29T15:46:02.753203",
+  "timestamp": "2026-06-30T03:38:15.402896",
   "statuses": [
     {
       "name": "AWS",
@@ -27,8 +27,8 @@
       "service_name": "Multiple Products",
       "severity": "medium",
       "created": "2026-06-10T01:13:50+00:00",
-      "modified": "2026-06-23T22:52:50+00:00",
-      "status_impact": "SERVICE_DISRUPTION",
+      "modified": "2026-06-29T23:06:10+00:00",
+      "status_impact": "AVAILABLE",
       "link": "https://status.cloud.google.com/incidents/5fGQt4VbkDnr3Yp8PXPr"
     }
   ]
