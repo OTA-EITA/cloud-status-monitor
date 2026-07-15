@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-15T02:25:55.205754",
+  "timestamp": "2026-07-15T13:42:06.965189",
   "statuses": [
     {
       "name": "AWS",
@@ -27,8 +27,8 @@
       "service_name": "VMWare engine",
       "severity": "medium",
       "created": "2026-07-14T20:24:18+00:00",
-      "modified": "2026-07-15T01:56:03+00:00",
-      "status_impact": "SERVICE_DISRUPTION",
+      "modified": "2026-07-15T05:34:27+00:00",
+      "status_impact": "AVAILABLE",
       "link": "https://status.cloud.google.com/incidents/T8gmtofFSTGT5tbhyciF"
     }
   ]
