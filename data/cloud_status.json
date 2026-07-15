@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-14T13:41:46.159678",
+  "timestamp": "2026-07-15T02:25:55.205754",
   "statuses": [
     {
       "name": "AWS",
@@ -21,15 +21,15 @@
     },
     {
       "name": "GCP",
-      "status": "Network traffic to Google Cloud originating from Delhi, Chennai, Mumbai and surrounding areas is experiencing intermittent periods of elevated latency and possible packet loss.",
+      "status": "Google Cloud VMware Engine (GCVE) Stretched Cluster customers are experiencing zonal outages impacting network connectivity across multiple regions.",
       "has_incident": true,
-      "incident_number": "1464522124090870782",
-      "service_name": "Multiple Products",
+      "incident_number": "5362718329524538692",
+      "service_name": "VMWare engine",
       "severity": "medium",
-      "created": "2026-06-10T01:13:50+00:00",
-      "modified": "2026-06-29T23:06:10+00:00",
-      "status_impact": "AVAILABLE",
-      "link": "https://status.cloud.google.com/incidents/5fGQt4VbkDnr3Yp8PXPr"
+      "created": "2026-07-14T20:24:18+00:00",
+      "modified": "2026-07-15T01:56:03+00:00",
+      "status_impact": "SERVICE_DISRUPTION",
+      "link": "https://status.cloud.google.com/incidents/T8gmtofFSTGT5tbhyciF"
     }
   ]
 }
