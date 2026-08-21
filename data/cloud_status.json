@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-20T12:47:14.616808",
+  "timestamp": "2026-08-21T01:14:38.034782",
   "statuses": [
     {
       "name": "AWS",
@@ -21,15 +21,15 @@
     },
     {
       "name": "GCP",
-      "status": "Google Cloud VMware Engine (GCVE), Google Cloud NetApp Volumes, and Bare Metal Solutions (BMS) services are experiencing a service outage in europe-west4-a due to a cooling failure.",
+      "status": "We are investigating an issue where customers may experience timeouts, service degradations, errors, and elevated latencies across multiple products in the us-west1 region.",
       "has_incident": true,
-      "incident_number": "11738310674864064645",
+      "incident_number": "5789456648280872492",
       "service_name": "Multiple Products",
-      "severity": "medium",
-      "created": "2026-07-16T03:30:59+00:00",
-      "modified": "2026-07-25T13:16:55+00:00",
+      "severity": "high",
+      "created": "2026-08-20T16:44:37+00:00",
+      "modified": "2026-08-20T19:37:41+00:00",
       "status_impact": "AVAILABLE",
-      "link": "https://status.cloud.google.com/incidents/3BvH3LVGcupoYqV6F4Nw"
+      "link": "https://status.cloud.google.com/incidents/utF3FMFdQfwBzJcGG6vf"
     }
   ]
 }
