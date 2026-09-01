@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-01T03:48:20.183334",
+  "timestamp": "2026-09-01T16:08:09.307159",
   "statuses": [
     {
       "name": "AWS",
@@ -21,15 +21,15 @@
     },
     {
       "name": "GCP",
-      "status": "We are investigating an issue where customers may experience timeouts, service degradations, errors, and elevated latencies across multiple products in the us-west1 region.",
+      "status": "Multiple products in us-central1-b are experiencing network service degradation.",
       "has_incident": true,
-      "incident_number": "5789456648280872492",
+      "incident_number": "847028556969787721",
       "service_name": "Multiple Products",
-      "severity": "high",
-      "created": "2026-08-20T16:44:37+00:00",
-      "modified": "2026-08-27T21:45:02+00:00",
-      "status_impact": "AVAILABLE",
-      "link": "https://status.cloud.google.com/incidents/utF3FMFdQfwBzJcGG6vf"
+      "severity": "medium",
+      "created": "2026-09-01T16:03:12+00:00",
+      "modified": "2026-09-01T16:06:45+00:00",
+      "status_impact": "SERVICE_DISRUPTION",
+      "link": "https://status.cloud.google.com/incidents/J5ia5t9p3g9Q5Wi7r8Ev"
     }
   ]
 }
