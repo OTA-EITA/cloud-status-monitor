@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-03T03:10:33.503420",
+  "timestamp": "2026-09-03T15:52:04.286329",
   "statuses": [
     {
       "name": "AWS",
@@ -15,8 +15,8 @@
     },
     {
       "name": "GitHub",
-      "status": "All Systems Operational",
-      "indicator": "none",
+      "status": "Partially Degraded Service",
+      "indicator": "minor",
       "link": "https://www.githubstatus.com/"
     },
     {
