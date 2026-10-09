@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-09T04:48:09.144773",
+  "timestamp": "2026-10-09T18:00:12.449333",
   "statuses": [
     {
       "name": "AWS",
@@ -27,7 +27,7 @@
       "service_name": "Google Cloud Storage",
       "severity": "medium",
       "created": "2026-10-08T18:24:18+00:00",
-      "modified": "2026-10-09T00:13:43+00:00",
+      "modified": "2026-10-09T16:50:52+00:00",
       "status_impact": "AVAILABLE",
       "link": "https://status.cloud.google.com/incidents/mSFVt6PiP557bjRyYsut"
     }
