@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-20T03:37:42.334185",
+  "timestamp": "2026-10-20T16:24:46.480802",
   "statuses": [
     {
       "name": "AWS",
@@ -21,15 +21,15 @@
     },
     {
       "name": "GCP",
-      "status": "Google Cloud Storage (GCS) customers experienced elevated latencies and error rates when performing upload or write operations.",
+      "status": "Multiple services are experiencing issues in the europe-west2 region.",
       "has_incident": true,
-      "incident_number": "2779651412601232975",
-      "service_name": "Google Cloud Storage",
+      "incident_number": "7057439711403861453",
+      "service_name": "Multiple Products",
       "severity": "medium",
-      "created": "2026-10-08T18:24:18+00:00",
-      "modified": "2026-10-14T07:17:30+00:00",
+      "created": "2026-10-20T08:35:37+00:00",
+      "modified": "2026-10-20T14:05:42+00:00",
       "status_impact": "AVAILABLE",
-      "link": "https://status.cloud.google.com/incidents/mSFVt6PiP557bjRyYsut"
+      "link": "https://status.cloud.google.com/incidents/Xs2XTHzAVC9YnafnPyzj"
     }
   ]
 }
