@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-22T03:29:59.198031",
+  "timestamp": "2026-10-22T16:42:07.481077",
   "statuses": [
     {
       "name": "AWS",
@@ -15,19 +15,19 @@
     },
     {
       "name": "GitHub",
-      "status": "All Systems Operational",
-      "indicator": "none",
+      "status": "Partially Degraded Service",
+      "indicator": "minor",
       "link": "https://www.githubstatus.com/"
     },
     {
       "name": "GCP",
-      "status": "Multiple services are experiencing issues in the europe-west2 region.",
+      "status": "Multiple services were experiencing issues in the europe-west2 region.",
       "has_incident": true,
       "incident_number": "7057439711403861453",
       "service_name": "Multiple Products",
       "severity": "medium",
       "created": "2026-10-20T08:35:37+00:00",
-      "modified": "2026-10-20T14:05:42+00:00",
+      "modified": "2026-10-22T16:19:08+00:00",
       "status_impact": "AVAILABLE",
       "link": "https://status.cloud.google.com/incidents/Xs2XTHzAVC9YnafnPyzj"
     }
